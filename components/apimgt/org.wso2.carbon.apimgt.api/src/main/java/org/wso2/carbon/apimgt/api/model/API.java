@@ -146,8 +146,8 @@ public class API implements Serializable {
 
     private String monetizationCategory;
 
-    private String markdownContentId;
-    
+    private Boolean isMarkdownOverview;
+
     private List<SOAPToRestSequence> soapToRestSequences;
 
     public List<SOAPToRestSequence> getSoapToRestSequences() {
@@ -1392,12 +1392,12 @@ public class API implements Serializable {
         this.testKey = testKey;
     }
 
-    public String getMarkdownContentId() {
-        return markdownContentId;
+    public Boolean isIsMarkdownOverview() {
+        return isMarkdownOverview;
     }
 
-    public void setMarkdownContentId(String markdownContentId) {
-        this.markdownContentId = markdownContentId;
+    public void setIsMarkdownOverview(Boolean isMarkdownOverview) {
+        this.isMarkdownOverview = isMarkdownOverview;
     }
 
     /**
