@@ -19,6 +19,7 @@ import org.wso2.carbon.apimgt.api.ExceptionCodes;
 import org.wso2.carbon.apimgt.api.model.API;
 import org.wso2.carbon.apimgt.api.model.APIIdentifier;
 import org.wso2.carbon.apimgt.api.model.APIResourceMediationPolicy;
+import org.wso2.carbon.apimgt.api.model.OASParserOptions;
 import org.wso2.carbon.apimgt.api.model.Scope;
 import org.wso2.carbon.apimgt.api.model.URITemplate;
 
@@ -159,7 +160,7 @@ public class OAS3ParserTest extends OASTestBase {
     public void testValidateOpenAPIDefinitionWithBlankTitle() throws Exception {
         String relativePath = "definitions" + File.separator + "oas3" + File.separator + "oas3_blank_title.yaml";
         String openApi = IOUtils.toString(getClass().getClassLoader().getResourceAsStream(relativePath), "UTF-8");
-        APIDefinitionValidationResponse response = oas3Parser.validateAPIDefinition(openApi, false);
+        APIDefinitionValidationResponse response = oas3Parser.validateAPIDefinition(openApi, false, null);
         Assert.assertTrue(response.isValid());
         Assert.assertTrue(response.getParser().getClass().equals(oas3Parser.getClass()));
     }
@@ -233,7 +234,9 @@ public class OAS3ParserTest extends OASTestBase {
                 getClass().getClassLoader().getResourceAsStream("definitions" + File.separator + "oas3"
                         + File.separator + "openApi3_validation.json"),
                 String.valueOf(StandardCharsets.UTF_8));
-        APIDefinitionValidationResponse response = OASParserUtil.validateAPIDefinition(faultySwagger, true);
+        OASParserOptions parserOptions = new OASParserOptions();
+        APIDefinitionValidationResponse response = OASParserUtil.validateAPIDefinition(faultySwagger, true,
+                parserOptions);
 
         Assert.assertFalse(response.isValid());
         Assert.assertEquals(1, response.getErrorItems().size());
@@ -250,7 +253,9 @@ public class OAS3ParserTest extends OASTestBase {
                         + File.separator + "oas3_paths_with_trailing_slash.json"),
                 "UTF-8");
 
-        APIDefinitionValidationResponse response = OASParserUtil.validateAPIDefinition(faultySwagger, true);
+        OASParserOptions parserOptions = new OASParserOptions();
+        APIDefinitionValidationResponse response = OASParserUtil.validateAPIDefinition(faultySwagger, true,
+                parserOptions);
         Assert.assertFalse(response.isValid());
         Assert.assertEquals(ExceptionCodes.OPENAPI_PARSE_EXCEPTION.getErrorCode(),
                 response.getErrorItems().get(0).getErrorCode());
@@ -266,7 +271,9 @@ public class OAS3ParserTest extends OASTestBase {
                         + File.separator + "openApi3_without_info_validation.json"),
                 String.valueOf(StandardCharsets.UTF_8));
 
-        APIDefinitionValidationResponse response = OASParserUtil.validateAPIDefinition(faultySwagger, true);
+        OASParserOptions parserOptions = new OASParserOptions();
+        APIDefinitionValidationResponse response = OASParserUtil.validateAPIDefinition(faultySwagger, true,
+                parserOptions);
 
         Assert.assertTrue(response.isValid());
         Assert.assertTrue(response.getInfo().getName().startsWith("API-Title-"));
