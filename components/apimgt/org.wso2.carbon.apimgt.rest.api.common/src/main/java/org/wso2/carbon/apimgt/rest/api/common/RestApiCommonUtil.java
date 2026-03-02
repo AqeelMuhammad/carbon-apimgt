@@ -30,7 +30,7 @@ import org.wso2.carbon.apimgt.api.model.Scope;
 import org.wso2.carbon.apimgt.api.model.URITemplate;
 import org.wso2.carbon.apimgt.impl.APIConstants;
 import org.wso2.carbon.apimgt.impl.APIManagerFactory;
-import org.wso2.carbon.apimgt.impl.internal.ServiceReferenceHolder;
+//import org.wso2.carbon.apimgt.impl.internal.ServiceReferenceHolder;
 import org.wso2.carbon.apimgt.impl.utils.APIUtil;
 import org.wso2.carbon.apimgt.rest.api.common.internal.ServiceReferenceHolder;
 import org.wso2.carbon.apimgt.spec.parser.definitions.OASParserUtil;
@@ -980,9 +980,8 @@ public class RestApiCommonUtil {
     }
 
     protected static byte[] getHmacKeyBytes() throws APIManagementException {
-        String base64Key = ServiceReferenceHolder.getInstance().getAPIManagerConfigurationService()
-                .getAPIManagerConfiguration().getFirstProperty(APIConstants.DEVPORTAL_URL_GENERATION_SECRET);
-
+        String base64Key = ServiceReferenceHolder.getInstance().getAPIMConfiguration()
+                .getFirstProperty(APIConstants.DEVPORTAL_URL_GENERATION_SECRET);
         if (StringUtils.isEmpty(base64Key)) {
             throw new APIManagementException("Could not resolve HMAC secret key from API Manager Configuration.");
         }
