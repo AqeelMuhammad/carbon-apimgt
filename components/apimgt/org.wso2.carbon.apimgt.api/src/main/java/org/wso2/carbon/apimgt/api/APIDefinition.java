@@ -21,6 +21,7 @@ import org.wso2.carbon.apimgt.api.dto.KeyManagerConfigurationDTO;
 import org.wso2.carbon.apimgt.api.model.API;
 import org.wso2.carbon.apimgt.api.model.APIIdentifier;
 import org.wso2.carbon.apimgt.api.model.APIProduct;
+import org.wso2.carbon.apimgt.api.model.OASParserOptions;
 import org.wso2.carbon.apimgt.api.model.Scope;
 import org.wso2.carbon.apimgt.api.model.SwaggerData;
 import org.wso2.carbon.apimgt.api.model.URITemplate;
@@ -142,12 +143,41 @@ public abstract class APIDefinition {
      * This method validates the given OpenAPI definition by content
      *
      * @param apiDefinition     OpenAPI Definition content
+     * @param returnJsonContent whether to return the converted json form of the OpenAPI definition
+     * @param parserOptions     optional OpenAPI parser options; may be {@code null} to use defaults
+     * @return APIDefinitionValidationResponse object with validation information
+     * @throws APIManagementException if an error occurs while validating the definition
+     */
+    public APIDefinitionValidationResponse validateAPIDefinition(String apiDefinition, boolean returnJsonContent,
+            OASParserOptions parserOptions) throws APIManagementException {
+        return validateAPIDefinition(apiDefinition, returnJsonContent);
+    }
+
+    /**
+     * This method validates the given OpenAPI definition by content
+     *
+     * @param apiDefinition     OpenAPI Definition content
      * @param url     OpenAPI Definition url
      * @param returnJsonContent whether to return the converted json form of the OpenAPI definition
      * @return APIDefinitionValidationResponse object with validation information
      */
     public abstract APIDefinitionValidationResponse validateAPIDefinition(String apiDefinition, String url,
             boolean returnJsonContent) throws APIManagementException;
+
+    /**
+     * This method validates the given OpenAPI definition by content with optional parser configuration.
+     *
+     * @param apiDefinition     OpenAPI definition content
+     * @param url               OpenAPI definition URL
+     * @param returnJsonContent whether to return the converted JSON form of the OpenAPI definition
+     * @param parserOptions     optional OpenAPI parser options; may be {@code null} to use defaults
+     * @return APIDefinitionValidationResponse object containing validation information
+     * @throws APIManagementException if an error occurs while validating the definition
+     */
+    public APIDefinitionValidationResponse validateAPIDefinition(String apiDefinition, String url,
+            boolean returnJsonContent, OASParserOptions parserOptions) throws APIManagementException {
+        return validateAPIDefinition(apiDefinition, url, returnJsonContent);
+    }
 
     /**
      * Populate definition with wso2 APIM specific information
